@@ -1,2 +1,1 @@
-
-Bazı problem setlerinde devrik cümleler kullanıldığı için anladığım şekilde yaptım. Bu yüzden küçük hatalarım olmuş olabilir. Affınıza sığınırım :)
+Gazi DSC tarafından düzenlenen IoT1929 kampı Problem setlerinin çözümü..
