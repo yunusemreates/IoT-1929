@@ -1,0 +1,57 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
+using System.IO.Ports;
+
+namespace havaistasyonu
+{
+    public partial class Form1 : DevExpress.XtraEditors.XtraForm
+    {
+        private string data;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            serialPort1.PortName = "COM17";
+            serialPort1.BaudRate = 9600;
+            serialPort1.Open();
+            serialPort1.DataReceived += new SerialDataReceivedEventHandler(SerialPort1_DataReceived);
+
+        }
+        private void SerialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        {
+            data = serialPort1.ReadLine();
+            this.Invoke(new EventHandler(displayData_event));
+        }
+        private void displayData_event(object sender, EventArgs e)
+        {
+            string[] value = data.Split('/');
+            float value0 = float.Parse(value[0]);
+            float value1 = float.Parse(value[1]);
+            float value2 = float.Parse(value[2]);
+            float value3 = float.Parse(value[3]);
+            arcScaleNeedleComponent1.Value = value0;
+            arcScaleNeedleComponent2.Value = value1;
+            arcScaleNeedleComponent3.Value = value2;
+            arcScaleNeedleComponent4.Value = value3;
+            digitalGauge1.Text = value[0];
+            digitalGauge2.Text = value[1];
+            digitalGauge3.Text = value[2];
+            digitalGauge4.Text = value[3];
+
+        }
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (serialPort1.IsOpen) serialPort1.Close();
+        }
+    }
+}
